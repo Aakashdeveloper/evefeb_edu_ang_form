@@ -4,10 +4,47 @@
       Angular Forms
     </div>
     <div class="panel-body">
-      <form>
-        <input type="text" placeholder="firstName">
+      <form #form="ngForm" novalidate>
+        <div class="form-group">
+           <label for="firstname">FirstName</label>
+           <input type="text" placeholder="firstName" class="form-control"
+           id="firstname" name="firstName" [(ngModel)]="model.firstName">
+        </div>
+        <div class="form-group">
+            <label for="lastname">LastName</label>
+            <input type="text" placeholder="lastName" class="form-control"
+            id="lastname" name="lastName" [(ngModel)]="model.lastName">
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="fullTime" checked [(ngModel)]="model.fullTime">FullTime
+          </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="gender" value="female" [(ngModel)]="model.gender" checked>Female
+            </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="gender" value="male" [(ngModel)]="model.gender">Male
+          </label>
+        </div>
+        <div class="form-group">
+          <label>Code Lang</label>
+          <select class="form-control"
+            name="codeLang" [(ngModel)]="model.codeLang">
+            <option *ngFor="let lang of languages">
+              {{lang}}
+            </option>
+           
+          </select>
+        </div>
         <button class="btn btn-success" type="submit">Submit</button>
       </form>
+     Model: {{model|json}}
+     <br/>
+     Angular:{{form.value|json}}
     </div>
   </div>
 </div>

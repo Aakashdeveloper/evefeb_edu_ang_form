@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {Employee} from './models/employee.model';
+
 
 @Component({
   selector: 'app-form',
@@ -7,4 +9,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Angular5 Forms';
+  languages=["NodeJs","AngularJs","ReactJs"]
+  model = new Employee("Edureka","Angular",true,"male","NodeJs")
 }
