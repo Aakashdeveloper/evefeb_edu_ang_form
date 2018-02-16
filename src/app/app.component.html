@@ -4,16 +4,36 @@
       Angular Forms
     </div>
     <div class="panel-body">
-      <form #form="ngForm" novalidate>
-        <div class="form-group">
-           <label for="firstname">FirstName</label>
+      <form #form="ngForm" novalidate (submit)="submitForm(form)">
+        <div class="form-group" [class.has-error]="firstName.invalid">
+           <label for="firstname" class="control-label">FirstName</label>
            <input type="text" placeholder="firstName" class="form-control"
-           id="firstname" name="firstName" [(ngModel)]="model.firstName">
+           id="firstname" name="firstName" [ngModel]="model.firstName"
+           #firstName="ngModel"  required
+           (ngModelChange)="firstToUpper($event)">
+           <div class="alert alert-danger" *ngIf="firstName.invalid">
+             First Name is required
+           </div>
         </div>
-        <div class="form-group">
-            <label for="lastname">LastName</label>
-            <input type="text" placeholder="lastName" class="form-control"
-            id="lastname" name="lastName" [(ngModel)]="model.lastName">
+        <h3>Classes</h3>
+        <h3>{{firstName.invalid}}</h3>
+        <div class="form-group" [class.has-error]="password.invalid">
+            <label for="password" class="control-label">Password</label>
+            <input type="password" placeholder="password" class="form-control"
+            id="password" name="password" [(ngModel)]="model.password"
+            #password="ngModel" minlength="3" required>
+            <div class="alert alert-danger" *ngIf="password.invalid">
+              Password is required & Min length of password Should be 3
+            </div>
+        </div>
+        <div class="form-group" [class.has-error]="phone.invalid">
+          <label for="phone" class="control-label">Phone</label>
+          <input type="tel" placeholder="password" class="form-control"
+          id="phone" name="phone" [(ngModel)]="model.phone"
+          #phone="ngModel" pattern="[0-9]{10}">
+          <div class="alert alert-danger" *ngIf="phone.invalid">
+            Phone number is not valid
+          </div>
         </div>
         <div class="checkbox">
           <label>
@@ -30,10 +50,15 @@
             <input type="radio" name="gender" value="male" [(ngModel)]="model.gender">Male
           </label>
         </div>
-        <div class="form-group">
+        <div class="form-group" [class.has-error]="hasCodeLangError">
           <label>Code Lang</label>
+          <div class="alert alert-danger" *ngIf="hasCodeLangError">
+            Select Valid Option
+          </div>
           <select class="form-control"
-            name="codeLang" [(ngModel)]="model.codeLang">
+            name="codeLang" [(ngModel)]="model.codeLang"
+            (blur)="validateCodeLang($event)">
+            <option value="default">Select Code Lang</option>
             <option *ngFor="let lang of languages">
               {{lang}}
             </option>
